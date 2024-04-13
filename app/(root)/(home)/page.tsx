@@ -1,8 +1,11 @@
+import Navbar from "@/components/shared/navbar/Navbar";
+// import { UserButton } from "@clerk/nextjs";
 
 const Home = () => {
     return(
         <div>
-             <p> Welcome to Home </p>
+             {/* <UserButton afterSignOutUrl="/" /> */}
+             <Navbar/>
         </div>
     )
 }
