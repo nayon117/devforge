@@ -1,10 +1,10 @@
 import Navbar from "@/components/shared/navbar/Navbar";
-import { UserButton } from "@clerk/nextjs";
+// import { UserButton } from "@clerk/nextjs";
 
 const Home = () => {
     return(
         <div>
-             <UserButton afterSignOutUrl="/" />
+             {/* <UserButton afterSignOutUrl="/" /> */}
              <Navbar/>
         </div>
     )
