@@ -12,6 +12,7 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import Image from "next/image";
+import { themes } from "@/constants";
 
 const Theme = () => {
   const { mode, setMode } = useTheme();
@@ -25,7 +26,7 @@ const Theme = () => {
               alt="sun image"
               width={20}
               height={20}
-            //   className="active-theme"
+              //   className="active-theme"
             />
           ) : (
             <Image
@@ -33,19 +34,22 @@ const Theme = () => {
               alt="moon image"
               width={20}
               height={20}
-            //   className="active-theme"
+              //   className="active-theme"
             />
           )}
         </MenubarTrigger>
         <MenubarContent className="absolute right-[-3rem] mt-3 min-w-[120px] border py-2 rounded dark:border-gray-700 dark:bg-gray-900">
-          <MenubarItem>
-            New Tab <MenubarShortcut>⌘T</MenubarShortcut>
-          </MenubarItem>
-          <MenubarItem>New Window</MenubarItem>
-          <MenubarSeparator />
-          <MenubarItem>Share</MenubarItem>
-          <MenubarSeparator />
-          <MenubarItem>Print</MenubarItem>
+          {themes.map((item) => (
+            <MenubarItem key={item.value} onClick={()=>{}}>
+              <Image
+                src={item.icon}
+                alt={item.value}
+                width={16}
+                height={16}
+                className={`${mode === item.value && "active-theme"}`}
+              />
+            </MenubarItem>
+          ))}
         </MenubarContent>
       </MenubarMenu>
     </Menubar>

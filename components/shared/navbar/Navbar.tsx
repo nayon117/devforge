@@ -1,3 +1,4 @@
+/* eslint-disable tailwindcss/classnames-order */
 /* eslint-disable tailwindcss/no-custom-classname */
 import { SignedIn, UserButton } from "@clerk/nextjs";
 import Theme from "./Theme";
