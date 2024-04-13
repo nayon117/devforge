@@ -16,8 +16,8 @@ const Navbar = () => {
           height={23}
           width={23}
         />
-        <p className="h2-bold font-spaceGrotesk text-gray-100 dark:text-gray-900 max-sm:hidden">
-          Dev <span className="text-primary-500">Forge</span>
+        <p className="text-2xl font-bold font-spaceGrotesk text-gray-100 dark:text-gray-900 max-sm:hidden">
+          Dev<span className="text-orange-500">Forge</span>
         </p>
       </Link>
 
@@ -37,6 +37,7 @@ const Navbar = () => {
             }}
           />
         </SignedIn>
+        
       </div>
     </nav>
   );
