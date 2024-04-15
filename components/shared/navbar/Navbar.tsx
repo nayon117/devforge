@@ -5,6 +5,7 @@ import Theme from "./Theme";
 
 import Image from "next/image";
 import Link from "next/link";
+import MobileNav from "./MobileNav";
 
 const Navbar = () => {
   return (
@@ -14,7 +15,7 @@ const Navbar = () => {
           src="/assets/images/site-logo.svg"
           alt="devForge"
           height={23}
-          width={23}
+          width={23} 
         />
         <p className="text-2xl font-bold font-spaceGrotesk text-gray-100 dark:text-gray-900 max-sm:hidden">
           Dev<span className="text-orange-500">Forge</span>
@@ -22,7 +23,7 @@ const Navbar = () => {
       </Link>
 
       {/* globarl search */}
-      <div>
+      <div className="flex items-center">
         <Theme />
         <SignedIn>
           <UserButton
@@ -37,7 +38,8 @@ const Navbar = () => {
             }}
           />
         </SignedIn>
-        
+        <MobileNav/>
+
       </div>
     </nav>
   );
