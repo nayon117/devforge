@@ -6,10 +6,11 @@ import Theme from "./Theme";
 import Image from "next/image";
 import Link from "next/link";
 import MobileNav from "./MobileNav";
+import GlobalSearch from "../search/GlobalSearch";
 
 const Navbar = () => {
   return (
-    <nav className="flex justify-between items-center  bg-gray-800 dark:bg-gray-100 shadow-light-300 fixed z-50 w-full gap-5 p-6 sm:px-12 dark:shadow-none">
+    <nav className="flex justify-between items-center  bg-white dark:bg-gray-900 shadow-light-300 fixed z-50 w-full gap-5 p-6 sm:px-12 dark:shadow-none">
       <Link className="flex items-center gap-1" href="/">
         <Image
           src="/assets/images/site-logo.svg"
@@ -17,12 +18,13 @@ const Navbar = () => {
           height={23}
           width={23} 
         />
-        <p className="text-2xl font-bold font-spaceGrotesk text-gray-100 dark:text-gray-900 max-sm:hidden">
+        <p className="text-2xl font-bold font-spaceGrotesk text-gray-900 dark:text-white max-sm:hidden">
           Dev<span className="text-orange-500">Forge</span>
         </p>
       </Link>
 
-      {/* globarl search */}
+       <GlobalSearch/>
+
       <div className="flex items-center">
         <Theme />
         <SignedIn>
