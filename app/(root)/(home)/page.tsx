@@ -1,3 +1,4 @@
+import Filter from "@/components/shared/Filter";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -25,8 +26,8 @@ const Home = () => {
           otherClasses='flex-1'
         />
 
-        {/* <Filters /> */}
-        Filters
+        <Filter />
+       
       </div>
     </>
   );
