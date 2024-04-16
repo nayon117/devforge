@@ -1,5 +1,3 @@
-/* eslint-disable tailwindcss/classnames-order */
-/* eslint-disable tailwindcss/no-custom-classname */
 import { SignedIn, UserButton } from "@clerk/nextjs";
 import Theme from "./Theme";
 
@@ -10,20 +8,20 @@ import GlobalSearch from "../search/GlobalSearch";
 
 const Navbar = () => {
   return (
-    <nav className="flex justify-between items-center  bg-white dark:bg-gray-900 shadow-light-300 fixed z-50 w-full gap-5 p-6 sm:px-12 dark:shadow-none">
+    <nav className="background-light900_dark200 fixed z-50 flex  w-full items-center justify-between gap-5 p-6 shadow-light-300 dark:shadow-none sm:px-12">
       <Link className="flex items-center gap-1" href="/">
         <Image
           src="/assets/images/site-logo.svg"
           alt="devForge"
           height={23}
-          width={23} 
+          width={23}
         />
-        <p className="text-2xl font-bold font-spaceGrotesk text-gray-900 dark:text-white max-sm:hidden">
-          Dev<span className="text-orange-500">Forge</span>
+        <p className="h2-bold  font-spaceGrotesk text-dark-100 dark:text-light-900 max-sm:hidden">
+          Dev<span className="text-primary-500">Forge</span>
         </p>
       </Link>
 
-       <GlobalSearch/>
+      <GlobalSearch />
 
       <div className="flex items-center">
         <Theme />
@@ -40,8 +38,7 @@ const Navbar = () => {
             }}
           />
         </SignedIn>
-        <MobileNav/>
-
+        <MobileNav />
       </div>
     </nav>
   );

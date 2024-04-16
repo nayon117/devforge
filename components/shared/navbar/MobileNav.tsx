@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -13,23 +13,29 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const NavContent = () => {
-    const pathname = usePathname()
+  const pathname = usePathname();
   return (
     <section className="flex h-full flex-col gap-6 pt-16">
       {sidebarLinks.map((item) => {
-        const isActive = (pathname.includes(item.route) && item.route.length>1) || (pathname === item.route)
+        const isActive =
+          (pathname.includes(item.route) && item.route.length > 1) ||
+          pathname === item.route;
         return (
           <SheetClose asChild key={item.route}>
-            <Link href={item.route}
-             className={`${isActive ? 'primary-gradient rounded-lg text-gray-100 ' :'text-dark300_light900'} flex items-center justify-start gap-4 bg-transparent p-4 `}
-             >
+            <Link
+              href={item.route}
+              className={`${isActive ? "primary-gradient rounded-lg text-light-900 " : "text-dark300_light900"} flex items-center justify-start gap-4 bg-transparent p-4 `}
+            >
               <Image
                 src={item.imgURL}
                 alt={item.label}
                 width={20}
                 height={20}
+                className={`${isActive ? "" : "invert-colors"}`}
               />
-              <p className={`${isActive? 'font-bold':'font-medium'}`} >{item.label}</p>
+              <p className={`${isActive ? "base-bold" : "base-medium"}`}>
+                {item.label}
+              </p>
             </Link>
           </SheetClose>
         );
@@ -47,7 +53,7 @@ const MobileNav = () => {
           width={36}
           height={36}
           alt="menu"
-          className="text-gray-900 dark:text-white sm:hidden"
+          className="invert-colors sm:hidden"
         />
       </SheetTrigger>
       <SheetContent
@@ -61,8 +67,8 @@ const MobileNav = () => {
             height={23}
             width={23}
           />
-          <p className="text-2xl font-bold text-gray-900 dark:text-white ">
-            Dev<span className="text-orange-500">Forge</span>
+          <p className="h2-bold text-dark100_light900 font-spaceGrotesk">
+            Dev<span className="text-primary-500">Forge</span>
           </p>
         </Link>
         <div>
@@ -74,16 +80,16 @@ const MobileNav = () => {
             <div className="flex flex-col gap-3">
               <SheetClose asChild>
                 <Link href="/sign-in">
-                  <Button className="min-h-[41px] w-full rounded bg-gray-800 px-4 py-3 shadow-md">
-                    <span className="text-orange-500">Login</span>
+                  <Button className="small-medium btn-secondary min-h-[41px] w-full rounded px-4 py-3 shadow-none">
+                    <span className="primary-text-gradient">Login</span>
                   </Button>
                 </Link>
               </SheetClose>
 
               <SheetClose asChild>
                 <Link href="/sign-up">
-                  <Button className="light-border-2 min-h-[41px] w-full rounded bg-gray-800 px-4 py-3 shadow-md">
-                    <span className="text-orange-500">Sign Up</span>
+                  <Button className="small-medium light-border-2 btn-tertiary text-dark400_light900 min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
+                    Sign Up
                   </Button>
                 </Link>
               </SheetClose>
