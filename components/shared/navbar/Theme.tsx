@@ -1,6 +1,3 @@
-/* eslint-disable tailwindcss/no-custom-classname */
-/* eslint-disable tailwindcss/classnames-order */
-/* eslint-disable tailwindcss/no-unnecessary-arbitrary-value */
 "use client";
 import { useTheme } from "@/context/ThemeProvider";
 import {
@@ -18,14 +15,14 @@ const Theme = () => {
   return (
     <Menubar className="relative border-none bg-transparent shadow-none">
       <MenubarMenu>
-        <MenubarTrigger>
+        <MenubarTrigger className="focus:bg-light-900 data-[state=open]:bg-light-900 dark:focus:bg-dark-200 dark:data-[state=open]:bg-dark-200">
           {mode === "light" ? (
             <Image
               src="/assets/icons/sun.svg"
               alt="sun image"
               width={20}
               height={20}
-              //   className="active-theme"
+              className="active-theme"
             />
           ) : (
             <Image
@@ -33,22 +30,24 @@ const Theme = () => {
               alt="moon image"
               width={20}
               height={20}
-              //   className="active-theme"
+              className="active-theme"
             />
           )}
         </MenubarTrigger>
-        <MenubarContent className="absolute right-[-3rem] mt-3 min-w-[120px] border py-2 rounded dark:border-gray-700 dark:bg-gray-900 bg-white text-gray-900">
+        <MenubarContent className="absolute -right-12 mt-3 min-w-[120px] rounded border py-2 dark:border-dark-400 dark:bg-dark-300">
           {themes.map((item) => (
-            <MenubarItem 
-            className="flex items-center gap-4  px-2.5 py-2"
-            key={item.value} onClick={()=>{
-              setMode(item.value)
-              if(item.value !== 'system'){
-                localStorage.theme = item.value
-              }else{
-                localStorage.removeItem('theme')
-              }
-            }}>
+            <MenubarItem
+              className="flex items-center gap-4 px-2.5  py-2 dark:focus:bg-dark-400"
+              key={item.value}
+              onClick={() => {
+                setMode(item.value);
+                if (item.value !== "system") {
+                  localStorage.theme = item.value;
+                } else {
+                  localStorage.removeItem("theme");
+                }
+              }}
+            >
               <Image
                 src={item.icon}
                 alt={item.value}
@@ -56,7 +55,11 @@ const Theme = () => {
                 height={16}
                 className={`${mode === item.value && "active-theme"}`}
               />
-              <p className="text-gray-500">{item.label}</p>
+              <p
+                className={`body-semibold text-light-500 ${mode === item.value ? "text-primary-500" : "text-dark100_light900"}`}
+              >
+                {item.label}
+              </p>
             </MenubarItem>
           ))}
         </MenubarContent>
