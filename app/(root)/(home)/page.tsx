@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
 import Link from "next/link";
 
-const Home = () => {
+const Home = async () => {
+  // const result = await getQuestion ()
   return (
     <>
       <div className="flex w-full flex-row-reverse justify-between gap-4 sm:flex-row sm:items-center">

@@ -6,8 +6,8 @@ import { connectToDatabase } from "../mongoose";
 
 export async function createQuestion(params: any) {
   try {
-    connectToDatabase();
-    const { title, content, tags, author, path } = params;
+    connectToDatabase(); 
+    const { title, content, tags, author } = params; // path
 
     // create question
     const question = await Question.create({
