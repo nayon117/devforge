@@ -1,6 +1,5 @@
 "use server"
 
-import { CloudFog } from "lucide-react";
 import User from "../models/user.model";
 import { connectToDatabase } from "../mongoose"
 
