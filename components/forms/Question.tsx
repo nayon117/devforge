@@ -21,12 +21,19 @@ import { questionsSchema } from "@/lib/validations";
 import { Badge } from "../ui/badge";
 import Image from "next/image";
 import { createQuestion } from "@/lib/actions/question.action";
+import { usePathname, useRouter } from "next/navigation";
 
 const type:any = "create";
 
-const Question = () => {
+interface Props {
+  mongoUserId: string;
+}
+
+const Question = ({mongoUserId}:Props) => {
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter()
+  const pathname = usePathname()
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof questionsSchema>>({
@@ -42,9 +49,17 @@ const Question = () => {
   async function onSubmit(values: z.infer<typeof questionsSchema>) {
     setIsSubmitting(true);
     try {
-       await createQuestion({})
+       await createQuestion({
+        title: values.title,
+        content: values.explanation,
+        tags: values.tags,
+        author:JSON.parse(mongoUserId),
+       })
+
+      //  navigate to homepage
+      router.push("/")
     } catch (error) {
-      // handle error
+      console.log(error);
     }finally{
       setIsSubmitting(false)
     }

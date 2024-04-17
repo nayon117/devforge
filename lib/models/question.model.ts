@@ -1,4 +1,3 @@
-import { auth } from "@clerk/nextjs";
 import {Schema, model, models, Document} from "mongoose";
 
 export interface IQuestion extends Document {
