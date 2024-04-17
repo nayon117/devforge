@@ -21,7 +21,7 @@ import { questionsSchema } from "@/lib/validations";
 import { Badge } from "../ui/badge";
 import Image from "next/image";
 import { createQuestion } from "@/lib/actions/question.action";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const type:any = "create";
 
@@ -33,7 +33,7 @@ const Question = ({mongoUserId}:Props) => {
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter()
-  // const pathname = usePathname()
+  const pathname = usePathname()
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof questionsSchema>>({
@@ -54,6 +54,7 @@ const Question = ({mongoUserId}:Props) => {
         content: values.explanation,
         tags: values.tags,
         author:JSON.parse(mongoUserId),
+        path: pathname
        })
 
       //  navigate to homepage
