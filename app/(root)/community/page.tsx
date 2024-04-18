@@ -1,3 +1,4 @@
+import UserCard from "@/components/cards/UserCard";
 import Filter from "@/components/shared/Filter";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { UserFilters } from "@/constants/filters";
@@ -27,11 +28,11 @@ const CommunityPage = async () => {
 
       <section className="mt-12 flex flex-wrap gap-4">
         {result.users.length > 0 ? (
-          result.users.map((user) => <div key={user._id}>{user.name}</div>)
+          result.users.map((user) => <UserCard key={user._id} user={user} />)
         ) : (
           <div className="paragraph-regular text-dark200_light800 mx-auto max-w-4xl text-center">
             <p>No Users yet</p>
-            <Link href="/sign-up" className="mt-1 font-bold text-accent-blue">
+            <Link href="/sign-up" className="mt-2 font-bold text-accent-blue">
               Join to be the first!
             </Link>
           </div>
