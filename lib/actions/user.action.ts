@@ -1,10 +1,11 @@
 "use server"
 
+import { revalidatePath } from "next/cache";
 import User from "../models/user.model";
 import { connectToDatabase } from "../mongoose"
-import { CreateUserParams } from "./shared.types";
+import { CreateUserParams, UpdateUserParams } from "./shared.types";
 
-
+// Get USER BY ID
 export async function getUserById(params:any) {
     try {
         connectToDatabase()
@@ -25,6 +26,20 @@ export async function createUser(userData:CreateUserParams) {
         connectToDatabase()
         const newUser = await User.create(userData)
         return newUser
+    } catch (error) {
+        console.log(error);
+        throw error
+    }
+}
+
+// UPDATE USER
+export async function updateUser(params:UpdateUserParams) {
+    try {
+        connectToDatabase()
+       
+        const {clerkId, updateData , path} = params;
+        await User.findOneAndUpdate({clerkId}, updateData, {new: true})
+        revalidatePath(path)
     } catch (error) {
         console.log(error);
         throw error
