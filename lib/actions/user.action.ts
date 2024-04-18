@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import User from "../models/user.model";
 import { connectToDatabase } from "../mongoose"
-import { CreateUserParams, DeleteUserParams, UpdateUserParams } from "./shared.types";
+import { CreateUserParams, DeleteUserParams, GetAllUsersParams, UpdateUserParams } from "./shared.types";
 import Question from "../models/question.model";
 
 // Get USER BY ID
@@ -58,7 +58,7 @@ export async function deleteUser(params:DeleteUserParams) {
 
         // TODO: Delete all user related data
         // get user questions id
-        const userQuestionIds = await Question.find({author: user._id}).distinct("_id")
+        // const userQuestionIds = await Question.find({author: user._id}).distinct("_id")
 
         // delete user questions
         await Question.deleteMany({author: user._id})
@@ -67,6 +67,23 @@ export async function deleteUser(params:DeleteUserParams) {
 
         const deletedUser = await User.findByIdAndDelete(user._id)
         return deletedUser;
+
+    } catch (error) {
+        console.log(error);
+        throw error
+    }
+}
+
+// Get all user
+export async function getAllUsers(params:GetAllUsersParams) {
+    try {
+        connectToDatabase()
+
+        // const {page=1, pageSize=20, filter, searchQuery} = params;
+        const users  = await User.find({})
+        .sort({createdAt: -1})
+        
+        return{users};
 
     } catch (error) {
         console.log(error);
