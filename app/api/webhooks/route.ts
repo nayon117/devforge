@@ -2,7 +2,7 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
-import { createUser } from "@/lib/actions/user.action";
+import { createUser, deleteUser, updateUser } from "@/lib/actions/user.action";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -55,11 +55,13 @@ export async function POST(req: Request) {
   const eventType = evt.type;
 
   // Handle the event
+
+    // Create user
   if (eventType === "user.created") {
     const { id, email_addresses, image_url, username, first_name, last_name } =
       evt.data;
 
-    // TODO: CREAT USER IN DATABASE
+    // CREAT USER IN DATABASE
     const mongoUser = await createUser({
       clerkId: id,
       name: `${first_name}${last_name ? ` ${last_name}` : ""}`,
@@ -72,11 +74,13 @@ export async function POST(req: Request) {
       message: "User created successfully",
       user: mongoUser,
     });
-  } else if (eventType === "user.updated") {
+  } 
+
+ //   Update user
+   if (eventType === "user.updated") {
     const { id, email_addresses, image_url, username, first_name, last_name } =
       evt.data;
 
-    // TODO: CREAT USER IN DATABASE
     const mongoUser = await updateUser({
       clerkId: id,
       updateData: {
@@ -89,10 +93,20 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({
-      message: "User created successfully",
+      message: "User updated successfully",
       user: mongoUser,
     });
   }
+
+//   delete user
+    if(eventType === "user.deleted") {
+        const { id } = evt.data;
+        const deletedUser = await deleteUser({clerkId: id!})
+        return NextResponse.json({
+            message: "User deleted successfully",
+            user: deletedUser
+        })
+    }
 
   return new Response("", { status: 200 });
 }
