@@ -15,7 +15,7 @@ export async function getTopInteractedTags(params:GetTopInteractedTagsParams) {
         // find interaction FOR THE users group by tag
         // sort by count
     
-    return ['tag1', 'tag2', 'tag3']
+    return [{_id:"1", name:"tag1"},{_id:"2", name:"tag2"},{_id:"3", name:"tag3"}]
 
   } catch (error) {
     console.log(error);
