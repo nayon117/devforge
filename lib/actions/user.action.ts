@@ -2,6 +2,7 @@
 
 import User from "../models/user.model";
 import { connectToDatabase } from "../mongoose"
+import { CreateUserParams } from "./shared.types";
 
 
 export async function getUserById(params:any) {
@@ -14,5 +15,18 @@ export async function getUserById(params:any) {
 
     } catch (error) {
         console.log(error);
+        throw error
+    }
+}
+
+// CREATE USER
+export async function createUser(userData:CreateUserParams) {
+    try {
+        connectToDatabase()
+        const newUser = await User.create(userData)
+        return newUser
+    } catch (error) {
+        console.log(error);
+        throw error
     }
 }
