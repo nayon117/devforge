@@ -37,9 +37,9 @@ const QuestionCard = ({
     <Card>
       <CardHeader>
        <Link href={`question/${_id}`} >
-       <CardTitle>{title}</CardTitle>
+       <CardTitle className="text-dark400_light700">{title}</CardTitle>
        </Link>
-         <div className="mt-3.5 flex flex-wrap gap-2">
+         <div className="mt-4 flex flex-wrap gap-2">
           {tags.map((tag,index) => (
              <RenderTag key={index} _id={tag._id} name={tag.name} />
           ))}

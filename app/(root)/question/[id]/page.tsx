@@ -1,4 +1,7 @@
+import Metric from "@/components/shared/Metric";
+import ParseHtml from "@/components/shared/ParseHtml";
 import { getQuestionById } from "@/lib/actions/question.action";
+import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -31,29 +34,31 @@ const page = async ({ params }) => {
         </h2>
       </div>
 
-      <div>
+      <div className="mb-8 mt-5 flex flex-wrap gap-4">
       <Metric
-            imgUrl= "/assets/icons/like.svg"
-            alt="upvotes"
-            value={formatAndDivideNumber(upVotes)}
-            title="votes"
+            imgUrl= "/assets/icons/clock.svg"
+            alt="clock icon"
+            value={` - asked ${getTimestamp(result.createdAt)}`}
+            title="Asked"
             textStyles="small-medium text-dark400_light800"
             />
             <Metric
             imgUrl= "/assets/icons/message.svg"
             alt="message"
-            value={formatAndDivideNumber(answers.length)}
+            value={formatAndDivideNumber(result.answers.length)}
             title="Answers"
             textStyles="small-medium text-dark400_light800"
             />
             <Metric
             imgUrl= "/assets/icons/eye.svg"
             alt="eye"
-            value={formatAndDivideNumber(views)}
+            value={formatAndDivideNumber(result.views)}
             title="Views"
             textStyles="small-medium text-dark400_light800"
             />
       </div>
+
+      <ParseHtml data={result.content} />
     </>
   );
 };

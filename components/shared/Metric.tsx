@@ -9,15 +9,23 @@ interface MetricProps {
   href?: string;
   isAuthor?: boolean;
   className?: string;
-  textStyles?: string; 
+  textStyles?: string;
 }
 
 const Metric: React.FC<MetricProps> = ({ imgUrl, alt, value, title }) => {
   return (
     <div>
-      <Image src={imgUrl} alt={alt} width={20} height={20} />
-      <span>{value}</span>
-      <span>{title}</span>
+      <div className="mt-2.5 flex items-center gap-2">
+        <Image
+          src={imgUrl}
+          alt={alt}
+          width={24}
+          height={24}
+          className="rounded-full"
+        />
+        <span className="text-dark400_light700">{value}</span>
+      </div>
+      {/* <span>{title}</span> */}
     </div>
   );
 };
