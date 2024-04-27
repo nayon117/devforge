@@ -6,17 +6,22 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import Link from "next/link";
+import RenderTag from "../shared/RenderTag";
+import Metric from "../shared/Metric";
+import { formatAndDivideNumber } from "@/lib/utils";
 
 interface Props {
   _id: string;
   title: string;
-  tags: string[];
-  author: string;
+  tags: { _id: string; name: string }[];
+  author:{ name: string; picture: string , _id?: string};
   upVotes: number;
   views: number;
-  answers: number;
+  answers: number[]
   createdAt: string;
 }
+
 
 const QuestionCard = ({
   _id,
@@ -31,8 +36,48 @@ const QuestionCard = ({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
-         
+       <Link href={`question/${_id}`} >
+       <CardTitle className="text-dark400_light700">{title}</CardTitle>
+       </Link>
+         <div className="mt-4 flex flex-wrap gap-2">
+          {tags.map((tag,index) => (
+             <RenderTag key={index} _id={tag._id} name={tag.name} />
+          ))}
+         </div>
+
+         <div className="flex-between mt-6 w-full flex-wrap gap-3">
+            <Metric
+            imgUrl= {author.picture}
+            alt="user"
+            value={author.name}
+            // title={` - asked ${getTimestamp(createdAt)}`}
+            title="user"
+            href={`/profile/${author._id}`}
+            isAuthor
+            className="body-medium text-dark400_light700"
+            />
+            <Metric
+            imgUrl= "/assets/icons/like.svg"
+            alt="upvotes"
+            value={formatAndDivideNumber(upVotes)}
+            title="votes"
+            textStyles="small-medium text-dark400_light800"
+            />
+            <Metric
+            imgUrl= "/assets/icons/message.svg"
+            alt="message"
+            value={formatAndDivideNumber(answers.length)}
+            title="Answers"
+            textStyles="small-medium text-dark400_light800"
+            />
+            <Metric
+            imgUrl= "/assets/icons/eye.svg"
+            alt="eye"
+            value={formatAndDivideNumber(views)}
+            title="Views"
+            textStyles="small-medium text-dark400_light800"
+            />
+         </div>
       </CardHeader>
       <CardContent>
          
