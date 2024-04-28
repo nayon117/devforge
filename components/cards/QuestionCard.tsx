@@ -33,6 +33,7 @@ const QuestionCard = ({
   answers,
   createdAt,
 }: Props) => {
+  upVotes = upVotes || 0;
   return (
     <Card>
       <CardHeader>
