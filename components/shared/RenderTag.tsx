@@ -3,10 +3,11 @@ import React from "react";
 interface Props {
     _id: string;
     name: string;
+    showCount?: boolean;
 
 }
 
-const RenderTag: React.FC<Props> = ({_id, name}) => {
+const RenderTag: React.FC<Props> = ({_id, name,showCount}) => {
     return(
         <div className="background-light800_dark400 w-fit rounded-sm px-5 py-1.5">
         <p className="paragraph-semibold text-dark300_light900">
