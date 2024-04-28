@@ -1,3 +1,5 @@
+import prism from 'prismjs';
+import parse from 'html-react-parser';
 
 const ParseHtml = () => {
     return(
