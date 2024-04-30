@@ -1,9 +1,9 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import Question from "../models/question.model";
-import Tag from "../models/tag.model";
-import User from "../models/user.model";
+import Question from "../../database/models/question.model";
+import Tag from "../../database/models/tag.model";
+import User from "../../database/models/user.model";
 import { connectToDatabase } from "../mongoose";
 import {
   CreateQuestionParams,
@@ -66,7 +66,7 @@ export async function createQuestion(params: CreateQuestionParams) {
 export async function getQuestionById(params: GetQuestionByIdParams) {
   try {
     connectToDatabase();
-    
+
     const { questionId } = params;
     const question = await Question.findById(questionId)
       .populate({ path: "tags", model: Tag, select: "_id name" })
@@ -76,7 +76,6 @@ export async function getQuestionById(params: GetQuestionByIdParams) {
         select: "_id clerkId name picture",
       });
     return question;
-    
   } catch (error) {
     console.log(error);
     throw error;
