@@ -19,7 +19,6 @@ import { useTheme } from "@/context/ThemeProvider";
 import { createAnswer } from "@/lib/actions/answer.action";
 import { usePathname } from "next/navigation";
 
-const type: any = "create";
 
 interface Props {
   question: string;
