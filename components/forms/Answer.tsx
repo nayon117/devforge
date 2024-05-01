@@ -9,7 +9,6 @@ import { Editor } from "@tinymce/tinymce-react";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormMessage,
@@ -17,10 +16,19 @@ import {
 import { Button } from "../ui/button";
 import { AnswerSchema } from "@/lib/validations";
 import { useTheme } from "@/context/ThemeProvider";
+import { createAnswer } from "@/lib/actions/answer.action";
+import { usePathname } from "next/navigation";
 
 const type: any = "create";
 
-const Answer = () => {
+interface Props {
+  question: string;
+  questionId: string;
+  authorId: string;
+}
+
+const Answer = ({ question, questionId, authorId }: Props) => {
+  const pathname = usePathname();
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { mode } = useTheme();
@@ -33,18 +41,29 @@ const Answer = () => {
     },
   });
 
-  const handleCreateAnswer = () =>{
+  const handleCreateAnswer = async (values: z.infer<typeof AnswerSchema>) => {
     setIsSubmitting(true);
 
     try {
-        // 
+      await createAnswer({
+        content: values.answer,
+        author: JSON.parse(authorId),
+        question: JSON.parse(questionId),
+        path: pathname,
+      });
+      form.reset();
+
+      if (editorRef.current) {
+        const editor = editorRef.current as any
+        editor.setContent("");
+      }
     } catch (error) {
-        console.log(error);
-        throw error;
-    }finally{
-        setIsSubmitting(false);
+      console.log(error);
+      throw error;
+    } finally {
+      setIsSubmitting(false);
     }
-  }
+  };
 
   return (
     <div className="mt-5">
@@ -57,6 +76,10 @@ const Answer = () => {
         </Button>
       </div>
       <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(handleCreateAnswer)}
+        className="mt-6 flex w-full flex-col gap-10"
+      >
         <FormField
           control={form.control}
           name="answer"
@@ -97,29 +120,27 @@ const Answer = () => {
                       "codesample | bold italic forecolor | alignleft aligncenter " +
                       "alignright alignjustify | bullist numlist ",
                     content_style: "body { font-family:Inter; font-size:16px }",
+                    skin: mode === "dark" ? "oxide-dark" : "oxide",
+                    content_css: mode === "dark" ? "dark" : "default",
                   }}
                 />
               </FormControl>
-              <FormDescription className="body-regular mt-2.5 text-light-500">
-                Include all the information and expand on what you put on the
-                answer.Minimum 20 characters
-              </FormDescription>
+               
               <FormMessage className="text-red-500" />
             </FormItem>
           )}
         />
 
-        <Button
-          type="submit"
-          className="primary-gradient mt-2.5 w-fit !text-light-900"
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? (
-            <>{type === "edit" ? "Editing..." : "Posting..."}</>
-          ) : (
-            <>{type === "edit" ? "Edit Question" : "Answer the question"}</>
-          )}
-        </Button>
+        <div className="flex justify-end">
+            <Button
+                type="submit"
+                className="primary-gradient w-fit text-white"
+                disabled={isSubmitting}
+            >
+               {isSubmitting ? "Submitting..." : "Submit"}
+            </Button>
+        </div>
+        </form>
       </Form>
     </div>
   );
