@@ -3,22 +3,20 @@ import Metric from "@/components/shared/Metric";
 import ParseHtml from "@/components/shared/ParseHtml";
 import RenderTag from "@/components/shared/RenderTag";
 import { getQuestionById } from "@/lib/actions/question.action";
-// import { getUserById } from "@/lib/actions/user.action";
+import { getUserById } from "@/lib/actions/user.action";
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
-// import { auth } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 
 const page = async ({ params }: { params: { id: string } }) => {
   const result = await getQuestionById({ questionId: params.id });
-  // const {userId:clerkId} = auth()
-  // let mongoUser;
-  // if(clerkId){
-  //   mongoUser = await getUserById({userId:clerkId})
-  // }
- const mongoUser ={
-    _id: "1",
+  const {userId:clerkId} = auth()
+  let mongoUser;
+  if(clerkId){
+    mongoUser = await getUserById({userId:clerkId})
   }
+
 
 
 
@@ -89,8 +87,7 @@ const page = async ({ params }: { params: { id: string } }) => {
       <Answer 
       question={result.content}
       questionId={JSON.stringify(result._id)}
-      // authorId={JSON.stringify(mongoUser._id)}
-      authorId={mongoUser._id}
+      authorId={JSON.stringify(mongoUser._id)}
       />
     </>
   );
