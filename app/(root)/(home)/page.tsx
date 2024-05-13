@@ -10,7 +10,7 @@ import Link from "next/link";
 
 const Home = async () => {
   const result = await getQuestions({});
-  console.log(result.questions);
+  // console.log(result.questions);
   return (
     <>
       <div className="flex w-full flex-row-reverse justify-between gap-4 sm:flex-row sm:items-center">
