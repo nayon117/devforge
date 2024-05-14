@@ -1,7 +1,9 @@
 import Answer from "@/components/forms/Answer";
+import AllAnswers from "@/components/shared/AllAnswers";
 import Metric from "@/components/shared/Metric";
 import ParseHtml from "@/components/shared/ParseHtml";
 import RenderTag from "@/components/shared/RenderTag";
+import Votes from "@/components/shared/Votes";
 import { getQuestionById } from "@/lib/actions/question.action";
 import { getUserById } from "@/lib/actions/user.action";
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
@@ -10,12 +12,13 @@ import Image from "next/image";
 import Link from "next/link";
 
 const page = async ({ params }: { params: { id: string } }) => {
-  const result = await getQuestionById({ questionId: params.id });
   const { userId: clerkId } = auth();
   let mongoUser;
   if (clerkId) {
     mongoUser = await getUserById({ userId: clerkId });
   }
+
+  const result = await getQuestionById({ questionId: params.id });
 
   return (
     <>
@@ -36,7 +39,9 @@ const page = async ({ params }: { params: { id: string } }) => {
               {result.author.name}
             </p>
           </Link>
-          <div className="flex justify-end">Voting</div>
+          <div className="flex justify-end">
+            <Votes />
+          </div>
         </div>
         <h2 className="h2-semibold text-dark200_light900 mt-3.5 w-full text-left">
           {result.title}
@@ -79,6 +84,12 @@ const page = async ({ params }: { params: { id: string } }) => {
           />
         ))}
       </div>
+
+      <AllAnswers
+        questionId={result._id}
+        userId={JSON.stringify(mongoUser._id)}
+        totalAnswers={result.answers.length}
+      />
 
       <Answer
         question={result.content}
