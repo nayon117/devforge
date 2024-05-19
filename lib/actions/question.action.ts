@@ -7,10 +7,13 @@ import User from "../../database/models/user.model";
 import { connectToDatabase } from "../mongoose";
 import {
   CreateQuestionParams,
+  DeleteQuestionParams,
   GetQuestionByIdParams,
   GetQuestionsParams,
   QuestionVoteParams,
 } from "./shared.types";
+import Answer from "@/database/models/answer.model";
+import Interaction from "@/database/models/interaction.model";
 
 export async function getQuestions(params: GetQuestionsParams) {
   try {
@@ -137,5 +140,23 @@ export async function downvoteQuestion(params: QuestionVoteParams) {
   } catch (error) {
     console.log(error);
     throw error;
+  }
+}
+
+
+export async function deleteQuestion(params: DeleteQuestionParams) {
+  try {
+    connectToDatabase();
+
+    const { questionId, path } = params;
+
+    await Question.deleteOne({ _id: questionId });
+    await Answer.deleteMany({ question: questionId });
+    await Interaction.deleteMany({ question: questionId });
+    await Tag.updateMany({ questions: questionId }, { $pull: { questions: questionId }});
+
+    revalidatePath(path);
+  } catch (error) {
+    console.log(error);
   }
 }
