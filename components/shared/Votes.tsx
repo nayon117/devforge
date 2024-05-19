@@ -2,7 +2,7 @@
 import { toggleSaveQuestion } from "@/lib/actions/user.action";
 import { formatAndDivideNumber } from "@/lib/utils";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { toast } from "../ui/use-toast";
 import { downvoteQuestion, upvoteQuestion } from "@/lib/actions/question.action";
 import { useEffect } from "react";
@@ -33,6 +33,7 @@ const Votes = ({
 }:Props) => {
 
   const pathname = usePathname()
+  const router = useRouter()
 
   const handleSave =async () =>{
     await toggleSaveQuestion({
@@ -111,7 +112,7 @@ const Votes = ({
       questionId: JSON.parse(itemId),
       userId: userId ? JSON.parse(userId) : undefined,
     })
-  }, [itemId, userId, pathname]);
+  }, [itemId, userId, pathname,router]);
 
 
   return (
