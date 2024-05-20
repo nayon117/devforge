@@ -8,11 +8,14 @@ import {
   DeleteUserParams,
   GetAllUsersParams,
   GetSavedQuestionsParams,
+  GetUserByIdParams,
   ToggleSaveQuestionParams,
   UpdateUserParams,
 } from "./shared.types";
 import Question from "../../database/models/question.model";
 import Tag from "@/database/models/tag.model";
+import Answer from "@/database/models/answer.model";
+
 
 
 // Get USER BY ID
@@ -155,5 +158,31 @@ export async function getSavedQuestions(params:GetSavedQuestionsParams) {
   } catch (error) {
     console.log(error)
     throw error
+  }
+}
+
+export async function getUserInfo(params: GetUserByIdParams) {
+  try {
+    connectToDatabase();
+
+    const { userId } = params;
+
+    const user = await User.findOne({ clerkId: userId });
+
+    if(!user) {
+      throw new Error('User not found');
+    }
+
+    const totalQuestions = await Question.countDocuments({ author: user._id })
+    const totalAnswers = await Answer.countDocuments({ author: user._id });
+
+    return {
+      user,
+      totalQuestions,
+      totalAnswers
+    }    
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 }
