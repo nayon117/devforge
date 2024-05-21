@@ -15,8 +15,9 @@ import AnswersTab from '@/components/shared/AnswersTab'
 
 
 const ProfileDetails = async ({ params, searchParams}: URLProps) => {
-    const { userId: clerkId } = auth();
-    const userInfo = await getUserInfo({ userId: params.id})
+  const { userId: clerkId } = auth();
+  const userInfo = await getUserInfo({ userId: params.id})
+  console.log(userInfo)
 
   return (
     <>
