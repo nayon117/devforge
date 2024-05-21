@@ -9,14 +9,13 @@ import {
   GetAllUsersParams,
   GetSavedQuestionsParams,
   GetUserByIdParams,
+  GetUserStatsParams,
   ToggleSaveQuestionParams,
   UpdateUserParams,
 } from "./shared.types";
 import Question from "../../database/models/question.model";
 import Tag from "@/database/models/tag.model";
 import Answer from "@/database/models/answer.model";
-
-
 
 // Get USER BY ID
 export async function getUserById(params: any) {
@@ -130,34 +129,33 @@ export async function toggleSaveQuestion(params: ToggleSaveQuestionParams) {
 }
 
 // get saved questions
-export async function getSavedQuestions(params:GetSavedQuestionsParams) {
+export async function getSavedQuestions(params: GetSavedQuestionsParams) {
   try {
-    connectToDatabase()
+    connectToDatabase();
     const { clerkId, searchQuery, filter, page = 1, pageSize = 20 } = params;
 
     const query: FilterQuery<typeof Question> = searchQuery
-      ? { title: { $regex: new RegExp(searchQuery, 'i') } }
-      : { };
-    const user = await User.findOne({clerkId}).populate({
-      path:'saved',
-      match:query,
-      options:{
-        sort:{createdAt:-1}
+      ? { title: { $regex: new RegExp(searchQuery, "i") } }
+      : {};
+    const user = await User.findOne({ clerkId }).populate({
+      path: "saved",
+      match: query,
+      options: {
+        sort: { createdAt: -1 },
       },
-      populate:[
-        { path: 'tags', model: Tag, select: "_id name" },
-        { path: 'author', model: User, select: '_id clerkId name picture'}
-      ]
-    })
+      populate: [
+        { path: "tags", model: Tag, select: "_id name" },
+        { path: "author", model: User, select: "_id clerkId name picture" },
+      ],
+    });
 
-    if(!user) throw new Error('User not found')
+    if (!user) throw new Error("User not found");
 
-      const savedQuestions = user.saved;
-      return {questions:savedQuestions}
-
+    const savedQuestions = user.saved;
+    return { questions: savedQuestions };
   } catch (error) {
-    console.log(error)
-    throw error
+    console.log(error);
+    throw error;
   }
 }
 
@@ -169,18 +167,35 @@ export async function getUserInfo(params: GetUserByIdParams) {
 
     const user = await User.findOne({ clerkId: userId });
 
-    if(!user) {
-      throw new Error('User not found');
+    if (!user) {
+      throw new Error("User not found");
     }
 
-    const totalQuestions = await Question.countDocuments({ author: user._id })
+    const totalQuestions = await Question.countDocuments({ author: user._id });
     const totalAnswers = await Answer.countDocuments({ author: user._id });
 
     return {
       user,
       totalQuestions,
-      totalAnswers
-    }    
+      totalAnswers,
+    };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getUserQuestions(params: GetUserStatsParams) {
+  try {
+    connectToDatabase();
+    const { userId, page = 1, pageSize = 10 } = params;
+    const totalQuestions = await Question.countDocuments({ author: userId });
+    const userQuestions = await Question.find({ author: userId })
+    .sort({views: -1, upvotes: -1})
+    .populate('tags', '_id name')
+    .populate('author', '_id clerkId name picture')
+    return { totalQuestions, questions:userQuestions };
+
   } catch (error) {
     console.log(error);
     throw error;
