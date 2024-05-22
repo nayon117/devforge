@@ -13,35 +13,41 @@ interface customInputProps {
   otherClasses?: string;
 }
 
-const LocalSearchbar = ({ route, iconPosition, imgSrc, placeholder, otherClasses,}: customInputProps) => {
+const LocalSearchbar = ({
+  route,
+  iconPosition,
+  imgSrc,
+  placeholder,
+  otherClasses,
+}: customInputProps) => {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams()
+  const searchParams = useSearchParams();
 
-  const query = searchParams.get("q") 
-  const [search, setSearch] = useState(query || "")
+  const query = searchParams.get("q");
+  const [search, setSearch] = useState(query || "");
 
-  useEffect(()=>{
-    const delayDebounceFn = setTimeout(()=>{
-      if(search){
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      if (search) {
         const newUrl = formUrlQuery({
           params: searchParams.toString(),
-          key:"q",
-          value:search
-        })
-        router.push(newUrl,{scroll:false})
-      }else{
-        if(pathname===route){
+          key: "q",
+          value: search,
+        });
+        router.push(newUrl, { scroll: false });
+      } else {
+        if (pathname === route) {
           const newUrl = removeKeysFromQuery({
             params: searchParams.toString(),
-            keysToRemove:["q"]
-          })
+            keysToRemove: ["q"],
+          });
           router.push(newUrl, { scroll: false });
         }
       }
-    },300)
-    return () => clearTimeout(delayDebounceFn)
-  },[search, route, pathname, router, searchParams, query])
+    }, 300);
+    return () => clearTimeout(delayDebounceFn);
+  }, [search, route, pathname, router, searchParams, query]);
 
   return (
     <div
@@ -62,7 +68,7 @@ const LocalSearchbar = ({ route, iconPosition, imgSrc, placeholder, otherClasses
         placeholder={placeholder}
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="paragraph-regular background-light800_darkgradient no-focus placeholder border-none shadow-none outline-none"
+        className="paragraph-regular background-light800_darkgradient no-focus placeholder text-dark200_light800 border-none shadow-none outline-none"
       />
     </div>
   );
