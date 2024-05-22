@@ -7,11 +7,12 @@ import Votes from "@/components/shared/Votes";
 import { getQuestionById } from "@/lib/actions/question.action";
 import { getUserById } from "@/lib/actions/user.action";
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
+import { URLProps } from "@/types";
 import { auth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 
-const page = async ({ params }: { params: { id: string } }) => {
+const page = async ({ params,searchParams }:URLProps) => {
   const { userId: clerkId } = auth();
   let mongoUser;
   if (clerkId) {
@@ -98,6 +99,8 @@ const page = async ({ params }: { params: { id: string } }) => {
         questionId={result._id}
         userId={mongoUser._id}
         totalAnswers={result.answers.length}
+        page={searchParams?.page}
+        filter={searchParams?.filter}
       />
 
       <Answer
