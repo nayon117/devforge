@@ -19,7 +19,8 @@ const Home = async ({searchParams}:SearchParamsProps) => {
     if(userId){
       result = await getRecommendedQuestions({
         searchQuery: searchParams.q,
-        userId
+        userId,
+        page: searchParams.page ? +searchParams.page : 1
       })
     }else{
       result ={
@@ -30,7 +31,8 @@ const Home = async ({searchParams}:SearchParamsProps) => {
   }else{
     result = await getQuestions({
       searchQuery: searchParams.q,
-      filter:searchParams.filter
+      filter:searchParams.filter,
+      page: searchParams.page ? +searchParams.page : 1
     });
   }
 
