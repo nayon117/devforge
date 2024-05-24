@@ -17,12 +17,23 @@ export async function createAnswer(params: CreateAnswerParams) {
       author,
       question,
     });
-    console.log(newAnswer)
-    await Question.findByIdAndUpdate(question,{
+ 
+   const questionObject =  await Question.findByIdAndUpdate(question,{
         $push: { answers: newAnswer._id }
     })
 
     // Todo: add interaction
+    await Interaction.create({
+      question,
+      answer: newAnswer._id,
+      user:author,
+     action: "answer",
+     tags:questionObject.tags
+    })
+   
+    await User.findByIdAndUpdate(author, { $inc: { reputation: 10 } });
+
+
     revalidatePath(path)
 
   } catch (error) {
