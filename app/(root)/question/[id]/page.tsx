@@ -7,7 +7,6 @@ import Votes from "@/components/shared/Votes";
 import { getQuestionById } from "@/lib/actions/question.action";
 import { getUserById } from "@/lib/actions/user.action";
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
-import { URLProps } from "@/types";
 import { auth } from "@clerk/nextjs";
 import { Metadata } from "next";
 import Image from "next/image";
@@ -19,7 +18,7 @@ export const metaData:Metadata ={
   keywords: "questions, answers, ask, anything, get answers"
 }
 
-const page = async ({ params,searchParams }:URLProps) => {
+const page = async ({ params,searchParams }:any) => {
   const { userId: clerkId } = auth();
   let mongoUser;
   if (clerkId) {

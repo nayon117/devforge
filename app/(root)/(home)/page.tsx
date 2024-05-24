@@ -43,7 +43,6 @@ const Home = async ({searchParams}:SearchParamsProps) => {
     });
   }
 
-  // console.log(result.questions);
   return (
     <>
       <div className="flex w-full flex-row-reverse justify-between gap-4 sm:flex-row sm:items-center">
