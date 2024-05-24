@@ -7,6 +7,13 @@ import {  QuestionFilters } from "@/constants/filters";
 import { getSavedQuestions } from "@/lib/actions/user.action";
 import { SearchParamsProps } from "@/types";
 import { auth } from "@clerk/nextjs";
+import { Metadata } from "next";
+
+export const metaData:Metadata ={
+  title: "Saved Questions | DevForge",
+  description: "Get answers to all your questions. Ask anything you want to know",
+  keywords: "Saved questions, answers, ask, anything, get answers"
+}
 
 const CollectionPage = async ({searchParams}:SearchParamsProps) => {
  
