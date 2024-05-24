@@ -5,7 +5,15 @@ import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { TagFilters} from "@/constants/filters";
 import { getAllTags } from "@/lib/actions/tag.action";
 import { SearchParamsProps } from "@/types";
+import { Metadata } from "next";
 import Link from "next/link";
+
+export const metaData:Metadata ={
+  title: "Tags | DevForge",
+  description: "Get answers to all your questions. Ask anything you want to know",
+  keywords: "tags, answers, ask, anything, get answers"
+
+}
 
 const TagsPage = async ({searchParams}:SearchParamsProps) => {
   const result = await getAllTags({
