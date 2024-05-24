@@ -7,6 +7,7 @@ import { getAllUsers } from "@/lib/actions/user.action";
 import { SearchParamsProps } from "@/types";
 import Link from "next/link";
 
+
 const CommunityPage = async ({searchParams}:SearchParamsProps) => {
   const result = await getAllUsers({
     searchQuery: searchParams.q,
@@ -14,7 +15,7 @@ const CommunityPage = async ({searchParams}:SearchParamsProps) => {
     page:searchParams.page ? +searchParams.page : 1
   });
 
-  
+
 
   return (
     <>
