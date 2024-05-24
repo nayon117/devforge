@@ -21,10 +21,10 @@ import { FilterQuery } from "mongoose";
 export async function getQuestions(params: GetQuestionsParams) {
   try {
     connectToDatabase();
-    const { searchQuery,filter,page = 1, pageSize = 2 } = params;
+    const { searchQuery,filter,page = 1, pageSize = 15 } = params;
     
     const skipAmount = (page - 1) * pageSize;
-    
+
     const query:FilterQuery<typeof Question> = {};
 
     if(searchQuery){
@@ -239,7 +239,7 @@ export async function getRecommendedQuestions(params: RecommendedParams) {
   try {
     await connectToDatabase();
 
-    const { userId, page = 1, pageSize = 20, searchQuery } = params;
+    const { userId, page = 1, pageSize = 15, searchQuery } = params;
 
     // find user
     const user = await User.findOne({ clerkId: userId });
