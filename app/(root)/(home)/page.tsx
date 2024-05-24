@@ -9,7 +9,14 @@ import { HomePageFilters } from "@/constants/filters";
 import { getQuestions, getRecommendedQuestions } from "@/lib/actions/question.action";
 import { SearchParamsProps } from "@/types";
 import { auth } from "@clerk/nextjs";
+import { Metadata } from "next";
 import Link from "next/link";
+
+export const metaData:Metadata ={
+  title: "Home | DevForge",
+  description: "Get answers to all your questions. Ask anything you want to know",
+  keywords: "Askmeanything, questions, answers, ask, anything, get answers"
+}
 
 const Home = async ({searchParams}:SearchParamsProps) => {
  
@@ -36,7 +43,6 @@ const Home = async ({searchParams}:SearchParamsProps) => {
     });
   }
 
-  // console.log(result.questions);
   return (
     <>
       <div className="flex w-full flex-row-reverse justify-between gap-4 sm:flex-row sm:items-center">

@@ -5,8 +5,14 @@ import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { UserFilters } from "@/constants/filters";
 import { getAllUsers } from "@/lib/actions/user.action";
 import { SearchParamsProps } from "@/types";
+import { Metadata } from "next";
 import Link from "next/link";
 
+export const metaData:Metadata ={
+  title: "Community | DevForge",
+  description: "Connect with amazing minds. Get answers to all your questions. Ask anything you want to know",
+  keywords: "users, community, connect, ask, anything, get answers"
+}
 
 const CommunityPage = async ({searchParams}:SearchParamsProps) => {
   const result = await getAllUsers({

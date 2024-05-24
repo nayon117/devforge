@@ -7,12 +7,18 @@ import Votes from "@/components/shared/Votes";
 import { getQuestionById } from "@/lib/actions/question.action";
 import { getUserById } from "@/lib/actions/user.action";
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
-import { URLProps } from "@/types";
 import { auth } from "@clerk/nextjs";
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
-const page = async ({ params,searchParams }:URLProps) => {
+export const metaData:Metadata ={
+  title: "QuestionDetails | DevForge",
+  description: "Ask anything and get answers from the community. DevForge is a platform for developers to ask questions and get answers from the community.",
+  keywords: "questions, answers, ask, anything, get answers"
+}
+
+const page = async ({ params,searchParams }:any) => {
   const { userId: clerkId } = auth();
   let mongoUser;
   if (clerkId) {

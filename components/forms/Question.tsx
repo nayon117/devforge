@@ -61,7 +61,7 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
           content: values.explanation,
           path: pathname,
         })
-
+         
         router.push(`/question/${parsedQuestionDetails._id}`);
       } else {
         await createQuestion({
@@ -72,7 +72,9 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
           path: pathname,
         });
 
+       
         router.push('/');
+        
       }
 
     } catch (error) {
