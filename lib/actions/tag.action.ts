@@ -9,26 +9,56 @@ import {
   GetTopInteractedTagsParams,
 } from "./shared.types";
 import { FilterQuery } from "mongoose";
+import Interaction from "@/database/models/interaction.model";
 
 // Get top interacted tags
-export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
+export async function getTopInteractedTags(params:GetTopInteractedTagsParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { userId } = params;
     const user = await User.findById(userId);
     if (!user) throw new Error("User not found");
 
-    // find interaction FOR THE users group by tag
-    // sort by count
+    console.log(`Fetching interactions for user: ${userId}`);
 
-    return [
-      { _id: "1", name: "tag1" },
-      { _id: "2", name: "tag2" },
-      { _id: "3", name: "tag3" },
-    ];
+    const interactions = await Interaction.aggregate([
+      { $match: { user: user._id } }, // Match interactions for the specified user
+      { $unwind: "$tags" },
+      {
+        $group: {
+          _id: "$tags",
+          count: { $sum: 1 }
+        }
+      },
+      { $sort: { count: -1 } },
+      { $limit: 10 },
+      {
+        $lookup: {
+          from: "tags",
+          localField: "_id",
+          foreignField: "_id",
+          as: "tagDetails"
+        }
+      },
+      {
+        $project: {
+          _id: 1,
+          name: { $arrayElemAt: ["$tagDetails.name", 0] }
+        }
+      }
+    ]);
+
+    console.log(`Interactions found: ${JSON.stringify(interactions)}`);
+
+    if (interactions.length === 0) {
+      console.log('No interactions found for user in tag actions');
+    }
+
+    return interactions;
+
   } catch (error) {
-    console.log(error);
+    console.error('Error fetching top interacted tags:', error);
     throw error;
   }
 }
