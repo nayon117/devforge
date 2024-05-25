@@ -17,7 +17,7 @@ const Navbar = () => {
           width={23}
         />
         <p className="h2-bold  font-spaceGrotesk text-dark-100 dark:text-light-900 max-sm:hidden">
-          Dev<span className="text-primary-500">Forge</span>
+          Dev<span className="primary-text-gradient">Forge</span>
         </p>
       </Link>
 
@@ -33,7 +33,7 @@ const Navbar = () => {
                 avatarBox: "h-10 w-10",
               },
               variables: {
-                colorPrimary: "#ff7000",
+                colorPrimary: "#5f1878",
               },
             }}
           />

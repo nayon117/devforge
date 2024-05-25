@@ -25,12 +25,16 @@ export async function viewQuestion(params: ViewQuestionParams) {
 
       if(existingInteraction) return console.log('User has already viewed.')
 
-      // Create interaction
-      await Interaction.create({
-        user: userId,
-        action: "view",
-        question: questionId,
-      })
+        const question = await Question.findById(questionId).select('tags');
+        if (!question) throw new Error("Question not found");
+  
+        // Create interaction with tags
+        await Interaction.create({
+          user: userId,
+          action: "view",
+          question: questionId,
+          tags: question.tags,
+        });
     }
   } catch (error) {
     console.log(error)
